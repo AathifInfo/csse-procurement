@@ -82,6 +82,7 @@ public class OrderServiceIMPL implements OrderService {
             logger.error("OrderServiceIMPL -> updateOrder() => started");
             Optional<Order> orderData = orderRepository.findById(id);
             if (orderData.isPresent()){
+                logger.error("OrderServiceIMPL -> updateOrder() -> getOrderDetails()  => started");
                 Order order = getOrderDetails(orderData, orderDTO);
 
                 logger.error("OrderServiceIMPL -> updateOrder() => ended");
@@ -95,7 +96,6 @@ public class OrderServiceIMPL implements OrderService {
     }
 
     private Order getOrderDetails(Optional<Order> orderData, OrderDTO orderDTO) {
-        logger.error("OrderServiceIMPL -> getOrderDetails() => started");
         if (orderData.isPresent()){
             Order order = orderData.get();
             order.setDate(orderDTO.getDate());
@@ -104,7 +104,7 @@ public class OrderServiceIMPL implements OrderService {
             order.setCompanyDetails(orderDTO.getCompanyDetails());
             order.setQty(orderDTO.getQty());
 
-            logger.error("OrderServiceIMPL -> getOrderDetails() => ended");
+            logger.error("OrderServiceIMPL -> updateOrder() -> getOrderDetails() => ended");
             return order;
         }
         return null;

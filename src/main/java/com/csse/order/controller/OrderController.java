@@ -32,7 +32,7 @@ public class OrderController {
      *
      * @param orderDTO - required dto to create an order
      * @return success or failed response from order creation and order details
-     * @author aathif - MTM
+     * @author aathif
      */
     @PostMapping("/order")
     public ResponseEntity<CommonResponse> createOrder(@Valid @RequestBody OrderDTO orderDTO){

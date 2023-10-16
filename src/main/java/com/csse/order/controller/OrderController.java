@@ -30,7 +30,7 @@ public class OrderController {
      *
      * @param orderDTO - required dto to create an order
      * @return success or failed response from order creation and order details
-     * @author aathif - MTM
+     * @author aathif
      */
     @PostMapping("/order")
     public ResponseEntity<CommonResponse> createOrder(@Valid @RequestBody OrderDTO orderDTO){
@@ -38,7 +38,7 @@ public class OrderController {
         CommonResponse commonResponse = new CommonResponse();
         commonResponse.setTimestamp(LocalDateTime.now());
         OrderResponseDTO responseDto =  orderService.createOrder(orderDTO);
-        if (responseDto.getStatusCode() == 200) {
+        if (responseDto.getStatusCode() == 200 || responseDto.getStatusCode() == 201) {
             commonResponse.setStatus(HttpStatus.OK);
             commonResponse.setMessage(responseDto.getDescription());
             commonResponse.setData(responseDto);

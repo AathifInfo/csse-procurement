@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "order_id")
+    @Column(name = "item_id")
     private long itemId;
 
     @Column(name = "item_name")
@@ -26,9 +25,4 @@ public class Item {
     @Column(name = "price")
     private float price;
 
-    public Item(String itemName, int qty, float price) {
-        this.itemName = itemName;
-        this.qty = qty;
-        this.price = price;
-    }
 }

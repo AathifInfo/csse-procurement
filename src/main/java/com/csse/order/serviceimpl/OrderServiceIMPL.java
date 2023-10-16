@@ -45,7 +45,7 @@ public class OrderServiceIMPL implements OrderService {
             );
             orderRepository.save(order);
             logger.error("OrderServiceIMPL -> createOrder() => success!");
-            return new OrderResponseDTO(StatusCode.CREATED, order, "Order Creation successfully", new Date());
+            return new OrderResponseDTO(StatusCode.OK, order, "Order Creation successfully", new Date());
         } catch (Exception e){
             logger.error("OrderServiceIMPL -> createOrder() => error: {}", e.getMessage());
             return new OrderResponseDTO(StatusCode.INTERNAL_SERVER_ERROR, null, "Order Creation failed", new Date());

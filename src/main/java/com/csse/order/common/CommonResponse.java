@@ -18,4 +18,5 @@ public class CommonResponse {
     private String message;
     private Object data;
     private LocalDateTime timestamp;
+
 }

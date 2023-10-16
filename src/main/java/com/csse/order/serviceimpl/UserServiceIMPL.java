@@ -3,7 +3,6 @@ package com.csse.order.serviceimpl;
 import com.csse.order.common.StatusCode;
 import com.csse.order.dto.UserDTO;
 import com.csse.order.dto.UserResponseDTO;
-import com.csse.order.entity.Order;
 import com.csse.order.entity.User;
 import com.csse.order.repository.UserRepository;
 import com.csse.order.service.UserService;
@@ -98,6 +97,90 @@ public class UserServiceIMPL implements UserService {
         } catch (Exception e){
             logger.error("UserServiceIMPL -> getUserById() => error: {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    /**
+     * Update user request
+     *
+     * @param id - required variable to update a user
+     * @param userDTO - required dto to update an user
+     * @return success or failed response from user update and return updated user details
+     * @author aathif
+     */
+    @Override
+    public ResponseEntity<User> updateUser(long id, UserDTO userDTO) {
+        try {
+            logger.error("UserServiceIMPL -> updateUser() => started");
+            Optional<User> userData = userRepository.findById(id);
+            if (userData.isPresent()){
+                logger.error("UserServiceIMPL -> updateUser() -> getUserDetails()  => started");
+                User user = getUserDetails(userData, userDTO);
+
+                logger.error("UserServiceIMPL -> updateUser() => success");
+                return new ResponseEntity<>(userRepository.save(user), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e){
+            logger.error("UserServiceIMPL -> updateUser() => error: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private User getUserDetails(Optional<User> userData, UserDTO userDTO) {
+        if (userData.isPresent()){
+            User user = userData.get();
+            user.setUserName(userDTO.getUserName());
+            user.setUserEmail(userDTO.getUserEmail());
+            user.setPassword(userDTO.getPassword());
+
+            logger.error("UserServiceIMPL -> updateUser() -> getUserDetails() => success");
+            return user;
+        }
+        return null;
+    }
+
+
+    /**
+     * Delete user request
+     *
+     * @param id - required variable to delete user
+     * @return success or failed response from user
+     * @author aathif
+     */
+    @Override
+    public UserResponseDTO deleteUser(long id) {
+        try {
+            logger.error("UserServiceIMPL -> deleteUser() => started");
+            userRepository.deleteById(id);
+
+            logger.error("UserServiceIMPL -> deleteUser() => success");
+            return new UserResponseDTO(StatusCode.OK, null, "User delete successfully", new Date());
+        } catch (Exception e){
+            logger.error("UserServiceIMPL -> deleteUser() => error: {}", e.getMessage());
+            return new UserResponseDTO(StatusCode.INTERNAL_SERVER_ERROR, null, "User delete failed", new Date());
+        }
+    }
+
+
+    /**
+     * Delete users request
+     *
+     * @return success or failed response from user
+     * @author aathif
+     */
+    @Override
+    public UserResponseDTO deleteUsers() {
+        try {
+            logger.error("UserServiceIMPL -> deleteUsers() => started");
+            userRepository.deleteAll();
+
+            logger.error("UserServiceIMPL -> deleteUsers() => success");
+            return new UserResponseDTO(StatusCode.OK, null, "Delete all users successfully", new Date());
+        } catch (Exception e){
+            logger.error("UserServiceIMPL -> deleteUsers() => error: {}", e.getMessage());
+            return new UserResponseDTO(StatusCode.INTERNAL_SERVER_ERROR, null, "Delete all users failed", new Date());
         }
     }
 }

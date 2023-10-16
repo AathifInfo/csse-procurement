@@ -113,7 +113,7 @@ public class OrderController {
             return new ResponseEntity<>(commonResponse, HttpStatus.OK);
         } else {
             commonResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-            commonResponse.setMessage("Claim initiation failed");
+            commonResponse.setMessage("Order initiation failed");
             commonResponse.setData(responseDto);
             logger.info("OrderController -> delete() => ended");
             return new ResponseEntity<>(commonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -140,9 +140,9 @@ public class OrderController {
             return new ResponseEntity<>(commonResponse, HttpStatus.OK);
         } else {
             commonResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-            commonResponse.setMessage("Claim initiation failed");
+            commonResponse.setMessage("Order initiation failed");
             commonResponse.setData(responseDto);
-            logger.info("ClaimController -> deletes() => ended");
+            logger.info("OrderController -> deletes() => ended");
             return new ResponseEntity<>(commonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

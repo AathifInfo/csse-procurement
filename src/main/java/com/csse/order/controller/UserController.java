@@ -78,6 +78,72 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    /**
+     * Update user request
+     *
+     * @param id - required variable to update a user
+     * @param userDTO - required dto to update an user
+     * @return success or failed response from user update and return updated user details
+     * @author aathif
+     */
+    @PutMapping("/user/{id}")
+    public ResponseEntity<User> updateUser(@Valid @PathVariable("id") long id, @RequestBody UserDTO userDTO){
+        return userService.updateUser(id, userDTO);
+    }
 
+    /**
+     * Delete user request
+     *
+     * @param id - required variable to delete user
+     * @return success or failed response from user
+     * @author aathif
+     */
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<CommonResponse> deleteUser(@PathVariable("id") long id){
+        logger.info("UserController -> deleteUser() => start");
+        CommonResponse commonResponse = new CommonResponse();
+        commonResponse.setTimestamp(LocalDateTime.now());
+        UserResponseDTO responseDto = userService.deleteUser(id);
+        if (responseDto.getStatusCode() == 200) {
+            commonResponse.setStatus(HttpStatus.OK);
+            commonResponse.setMessage(responseDto.getDescription());
+            commonResponse.setData(responseDto);
+            logger.info("UserController -> deleteUser() => ended");
+            return new ResponseEntity<>(commonResponse, HttpStatus.OK);
+        } else {
+            commonResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            commonResponse.setMessage("User initiation failed");
+            commonResponse.setData(responseDto);
+            logger.info("UserController -> delete() => ended");
+            return new ResponseEntity<>(commonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Delete users request
+     *
+     * @return success or failed response from user
+     * @author aathif
+     */
+    @DeleteMapping("/users")
+    public ResponseEntity<CommonResponse> deleteUsers(){
+        logger.info("UserController -> deleteUsers() => start");
+        CommonResponse commonResponse = new CommonResponse();
+        commonResponse.setTimestamp(LocalDateTime.now());
+        UserResponseDTO responseDto = userService.deleteUsers();
+        if (responseDto.getStatusCode() == 200) {
+            commonResponse.setStatus(HttpStatus.OK);
+            commonResponse.setMessage(responseDto.getDescription());
+            commonResponse.setData(responseDto);
+            logger.info("UserController -> deleteUsers() => ended");
+            return new ResponseEntity<>(commonResponse, HttpStatus.OK);
+        } else {
+            commonResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            commonResponse.setMessage("User initiation failed");
+            commonResponse.setData(responseDto);
+            logger.info("UserController -> deletes() => ended");
+            return new ResponseEntity<>(commonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

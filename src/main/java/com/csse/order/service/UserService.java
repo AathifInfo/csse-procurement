@@ -13,4 +13,10 @@ public interface UserService {
     ResponseEntity<List<User>> getUsers();
 
     ResponseEntity<User> getUserById(long id);
+
+    ResponseEntity<User> updateUser(long id, UserDTO userDTO);
+
+    UserResponseDTO deleteUser(long id);
+
+    UserResponseDTO deleteUsers();
 }

@@ -1,5 +1,6 @@
 package com.csse.order.serviceimpl;
 
+import com.csse.order.common.StatusCode;
 import com.csse.order.dto.OrderDTO;
 import com.csse.order.dto.OrderResponseDTO;
 import com.csse.order.entity.Order;
@@ -44,10 +45,10 @@ public class OrderServiceIMPL implements OrderService {
             );
             orderRepository.save(order);
             logger.error("OrderServiceIMPL -> createOrder() => success!");
-            return new OrderResponseDTO(Integer.parseInt("200"), order, "Order Creation successfully", new Date());
+            return new OrderResponseDTO(StatusCode.CREATED, order, "Order Creation successfully", new Date());
         } catch (Exception e){
             logger.error("OrderServiceIMPL -> createOrder() => error: {}", e.getMessage());
-            return new OrderResponseDTO(Integer.parseInt("500"), null, "Order Creation failed", new Date());
+            return new OrderResponseDTO(StatusCode.INTERNAL_SERVER_ERROR, null, "Order Creation failed", new Date());
         }
     }
 
@@ -155,10 +156,10 @@ public class OrderServiceIMPL implements OrderService {
             orderRepository.deleteById(id);
 
             logger.error("OrderServiceIMPL -> deleteOrder() => success");
-            return new OrderResponseDTO(Integer.parseInt("200"), null, "Order delete successfully", new Date());
+            return new OrderResponseDTO(StatusCode.OK, null, "Order delete successfully", new Date());
         } catch (Exception e){
             logger.error("OrderServiceIMPL -> deleteOrder() => error: {}", e.getMessage());
-            return new OrderResponseDTO(Integer.parseInt("500"), null, "Order delete failed", new Date());
+            return new OrderResponseDTO(StatusCode.INTERNAL_SERVER_ERROR, null, "Order delete failed", new Date());
         }
     }
 
@@ -176,10 +177,10 @@ public class OrderServiceIMPL implements OrderService {
             orderRepository.deleteAll();
 
             logger.error("OrderServiceIMPL -> deleteOrders() => success");
-            return new OrderResponseDTO(Integer.parseInt("200"), null, "Delete all orders successfully", new Date());
+            return new OrderResponseDTO(StatusCode.OK, null, "Delete all orders successfully", new Date());
         } catch (Exception e){
             logger.error("OrderServiceIMPL -> deleteOrders() => error: {}", e.getMessage());
-            return new OrderResponseDTO(Integer.parseInt("500"), null, "Delete all Orders failed", new Date());
+            return new OrderResponseDTO(StatusCode.INTERNAL_SERVER_ERROR, null, "Delete all Orders failed", new Date());
         }
     }
 }

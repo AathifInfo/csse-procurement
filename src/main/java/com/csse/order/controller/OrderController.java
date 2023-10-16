@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,7 +19,6 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/api")
 public class OrderController {
-
 
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
@@ -121,7 +119,6 @@ public class OrderController {
             return new ResponseEntity<>(commonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     /**
      * Delete orders request

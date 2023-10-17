@@ -27,7 +27,7 @@ class UserControllerTests {
         user.setUserId(1);
         user.setUserName("Aathif");
 
-        // Define the behavior of the orderService mock
+        // Define the behavior of the userService mock
         Mockito.when(userService.getUserById(1));
 
         // Perform a GET request

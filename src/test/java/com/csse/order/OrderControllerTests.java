@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
-public class OrderControllerTests {
+class OrderControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -22,7 +22,7 @@ public class OrderControllerTests {
     private OrderService orderService;
 
     @Test
-    public void testGetOrderById() throws Exception {
+    void testGetOrderById() throws Exception {
         Order order = new Order();
         order.setOrderId(1);
         order.setAddress("Colombo");

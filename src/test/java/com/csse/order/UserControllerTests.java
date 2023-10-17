@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
-public class UserControllerTests {
+class UserControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -22,7 +22,7 @@ public class UserControllerTests {
     private UserService userService;
 
     @Test
-    public void testGetOrderById() throws Exception {
+    void testGetOrderById() throws Exception {
         User user = new User();
         user.setUserId(1);
         user.setUserName("Aathif");

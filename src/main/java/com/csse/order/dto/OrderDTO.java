@@ -22,7 +22,7 @@ public class OrderDTO {
     @NotNull(message = "The supplier details is required")
     private String supplierDetails;
 
-    @NotNull(message = "The company details is required")
+    @NotNull(message = "The supplier details is required")
     private String companyDetails;
 
     @NotNull(message = "The quantity is required")

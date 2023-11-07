@@ -24,4 +24,8 @@ public class StatusCode {
     public static final int NOT_IMPLEMENTED = 501;
     public static final int BAD_GATEWAY = 502;
 
+    private StatusCode() {
+        throw new IllegalStateException("Utility class");
+    }
+
 }

@@ -1,10 +1,11 @@
 package com.csse.order.controller;
 
+
 import com.csse.order.common.CommonResponse;
-import com.csse.order.dto.OrderDTO;
-import com.csse.order.dto.OrderResponseDTO;
-import com.csse.order.entity.Order;
-import com.csse.order.service.OrderService;
+import com.csse.order.dto.UserDTO;
+import com.csse.order.dto.UserResponseDTO;
+import com.csse.order.entity.User;
+import com.csse.order.service.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,137 +13,135 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
-public class OrderController {
+public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
     @Autowired
-    OrderService orderService;
+    UserService userService;
 
     /**
-     * Create order request
+     * Create user request
      *
-     * @param orderDTO - required dto to create an order
-     * @return success or failed response from order creation and order details
+     * @param userDTO - required dto to create an user
+     * @return success or failed response from user creation
      * @author aathif
      */
-    @PostMapping("/order")
-    public ResponseEntity<CommonResponse> createOrder(@Valid @RequestBody OrderDTO orderDTO){
-        logger.info("OrderController -> createOrder() => start");
+    @PostMapping("/user")
+    public ResponseEntity<CommonResponse> createUser(@Valid @RequestBody UserDTO userDTO){
+        logger.info("UserController -> createUser() => start");
         CommonResponse commonResponse = new CommonResponse();
         commonResponse.setTimestamp(LocalDateTime.now());
-        OrderResponseDTO responseDto =  orderService.createOrder(orderDTO);
+        UserResponseDTO responseDto =  userService.createUser(userDTO);
         if (responseDto.getStatusCode() == 200 || responseDto.getStatusCode() == 201) {
             commonResponse.setStatus(HttpStatus.OK);
             commonResponse.setMessage(responseDto.getDescription());
             commonResponse.setData(responseDto);
-            logger.info("OrderController -> createOrder() => ended");
+            logger.info("UserController -> createUser() => ended");
             return new ResponseEntity<>(commonResponse, HttpStatus.OK);
         } else {
             commonResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-            commonResponse.setMessage("Create order failed");
+            commonResponse.setMessage("Create User failed");
             commonResponse.setData(responseDto);
-            logger.info("OrderController -> create() => ended");
+            logger.info("UserController -> create() => ended");
             return new ResponseEntity<>(commonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     * Get orders request
+     * Get users request
      *
-     * @return success or failed response from order and all orders details
+     * @return success or failed response from user and all users details
      * @author aathif
      */
-    @GetMapping("/orders")
-    public ResponseEntity<List<Order>> getOrders(){
-        return orderService.getOrders();
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getUsers(){
+        return userService.getUsers();
     }
 
-
     /**
-     * Get order request
+     * Get user request
      *
-     * @param id - required variable to get order
-     * @return success or failed response from order and order details
+     * @param id - required variable to get user
+     * @return success or failed response from user and user details
      * @author aathif
      */
-    @GetMapping("/order/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable("id") long id){
-        return orderService.getOrderById(id);
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable("id") long id){
+        return userService.getUserById(id);
     }
 
-
     /**
-     * Update order request
+     * Update user request
      *
-     * @param id - required variable to update an order
-     * @param orderDTO - required dto to update an order
-     * @return success or failed response from order update and return updated order details
+     * @param id - required variable to update a user
+     * @param userDTO - required dto to update an user
+     * @return success or failed response from user update and return updated user details
      * @author aathif
      */
-    @PutMapping("/order/{id}")
-    public ResponseEntity<Order> updateOrder(@Valid @PathVariable("id") long id, @RequestBody OrderDTO orderDTO){
-        return orderService.updateOrder(id, orderDTO);
+    @PutMapping("/user/{id}")
+    public ResponseEntity<User> updateUser(@Valid @PathVariable("id") long id, @RequestBody UserDTO userDTO){
+        return userService.updateUser(id, userDTO);
     }
 
-
     /**
-     * Delete order request
+     * Delete user request
      *
-     * @param id - required variable to delete order
-     * @return success or failed response from order
+     * @param id - required variable to delete user
+     * @return success or failed response from user
      * @author aathif
      */
-    @DeleteMapping("/order/{id}")
-    public ResponseEntity<CommonResponse> deleteOrder(@PathVariable("id") long id){
-        logger.info("OrderController -> deleteOrder() => start");
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<CommonResponse> deleteUser(@PathVariable("id") long id){
+        logger.info("UserController -> deleteUser() => start");
         CommonResponse commonResponse = new CommonResponse();
         commonResponse.setTimestamp(LocalDateTime.now());
-        OrderResponseDTO responseDto = orderService.deleteOrder(id);
+        UserResponseDTO responseDto = userService.deleteUser(id);
         if (responseDto.getStatusCode() == 200) {
             commonResponse.setStatus(HttpStatus.OK);
             commonResponse.setMessage(responseDto.getDescription());
             commonResponse.setData(responseDto);
-            logger.info("OrderController -> deleteOrder() => ended");
+            logger.info("UserController -> deleteUser() => ended");
             return new ResponseEntity<>(commonResponse, HttpStatus.OK);
         } else {
             commonResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-            commonResponse.setMessage("Order initiation failed");
+            commonResponse.setMessage("User initiation failed");
             commonResponse.setData(responseDto);
-            logger.info("OrderController -> delete() => ended");
+            logger.info("UserController -> delete() => ended");
             return new ResponseEntity<>(commonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     * Delete orders request
+     * Delete users request
      *
-     * @return success or failed response from order
+     * @return success or failed response from user
      * @author aathif
      */
-    @DeleteMapping("/orders")
-    public ResponseEntity<CommonResponse> deleteOrders(){
-        logger.info("OrderController -> createOrder() => start");
+    @DeleteMapping("/users")
+    public ResponseEntity<CommonResponse> deleteUsers(){
+        logger.info("UserController -> deleteUsers() => start");
         CommonResponse commonResponse = new CommonResponse();
         commonResponse.setTimestamp(LocalDateTime.now());
-        OrderResponseDTO responseDto = orderService.deleteOrders();
+        UserResponseDTO responseDto = userService.deleteUsers();
         if (responseDto.getStatusCode() == 200) {
             commonResponse.setStatus(HttpStatus.OK);
             commonResponse.setMessage(responseDto.getDescription());
             commonResponse.setData(responseDto);
-            logger.info("OrderController -> deleteOrders() => ended");
+            logger.info("UserController -> deleteUsers() => ended");
             return new ResponseEntity<>(commonResponse, HttpStatus.OK);
         } else {
             commonResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-            commonResponse.setMessage("Order initiation failed");
+            commonResponse.setMessage("User initiation failed");
             commonResponse.setData(responseDto);
-            logger.info("OrderController -> deletes() => ended");
+            logger.info("UserController -> deletes() => ended");
             return new ResponseEntity<>(commonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
